@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-    <a href="{% url 'blog:create_article' %}">{{ article.title }}</a>
+    <a href="{% url 'blog:new_article' %}">Create Article</a>
   {% for article in articles %}
     <a href="{% url 'blog:article' article.id %}">{{ article.title }}</a>
     {{ article.pub_date }}
