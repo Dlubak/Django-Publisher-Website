@@ -18,5 +18,11 @@ from blog import views
 
 app_name = 'blog'
 urlpatterns = [
+    # Homepage
     path('', views.index, name='index'),
+    # ## ARTICLES ##
+    # Page to read article
+    path('article/<int:article_id>', views.article, name='article'),
+    # New article form
+    path('new_article/', views.new_article, name='new_article'),
 ]

@@ -22,6 +22,7 @@ class Article(models.Model):
         Category, on_delete=models.SET_NULL, null=True)
 
     class Meta:
+        ordering = ['pub_date']
         verbose_name = "Article"
         verbose_name_plural = "Articles"
 
