@@ -8,10 +8,47 @@
     {% buttons %}
       <button name="submit" class="btn btn-primary">Save changes</button>
     {% endbuttons %}
-      <button name="delete" class="btn btn-primary">Delete Article</button>
+    <button type="button" id='delete'> Delete</button>
   </form>
+  <!-- Modal -->
+<div class='modal' id='delModal'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-body bg-danger text-white'>
+                Delete this post?
+            </div>
+            <div class='modal-footer'>
+                <button type='button' data-dismiss='modal'>Cancel</button>
+                <a href='{% url "blog:delete_article" article.id %}'>
+                    <button type='button'>Delete</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('#delete').click(function(){
+            $('#delModal').modal('show');
+        });
+    });
+</script>
+
 {% endblock content %}
 
 
-
-<!-- Modal -->
+<!--<div class="modal fade" id="confirmDeleteModal" tabindex="-1" caller-id="" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body confirm-delete">
+        This action is permanent!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="confirmDeleteButtonModal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+-->

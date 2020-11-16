@@ -29,4 +29,7 @@ urlpatterns = [
     # Edit article form
     path('edit_article/<int:article_id>',
          views.edit_article, name='edit_article'),
+    # Delete article
+    path('delete_article/<int:article_id>',
+         views.delete_article, name='delete_article')
 ]

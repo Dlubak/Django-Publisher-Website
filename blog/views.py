@@ -46,3 +46,9 @@ def edit_article(request, article_id):
             return redirect('blog:article', article_id=article.id)
     context = {'form': form, 'article': article}
     return render(request, 'blog/edit_article.html', context)
+
+
+def delete_article(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    article.delete()
+    return render(request, 'blog/index.html')
