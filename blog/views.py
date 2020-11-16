@@ -31,3 +31,18 @@ def new_article(request):
             return redirect('blog:article', new_article.id)
     context = {'form': articleForm}
     return render(request, 'blog/new_article.html', context)
+
+
+def edit_article(request, article_id):
+    template_name = 'blog/edit.article.html'
+    article = get_object_or_404(Article, id=article_id)
+    print(article)
+    if request.method != 'POST':
+        form = ArticleForm(instance=article)
+    else:
+        form = ArticleForm(instance=article, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('blog:article', article_id=article.id)
+    context = {'form': form, 'article': article}
+    return render(request, 'blog/edit_article.html', context)

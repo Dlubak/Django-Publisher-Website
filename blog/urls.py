@@ -16,6 +16,7 @@ Including another URLconf
 from django.urls import path, include
 from blog import views
 
+
 app_name = 'blog'
 urlpatterns = [
     # Homepage
@@ -25,4 +26,7 @@ urlpatterns = [
     path('article/<int:article_id>', views.article, name='article'),
     # New article form
     path('new_article/', views.new_article, name='new_article'),
+    # Edit article form
+    path('edit_article/<int:article_id>',
+         views.edit_article, name='edit_article'),
 ]

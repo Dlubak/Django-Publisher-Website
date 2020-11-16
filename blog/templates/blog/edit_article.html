@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+  <h1> Edit Article </h1>
+  <form action="{% url 'blog:edit_article' article.id %}" method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+      <button name="submit" class="btn btn-primary">Save changes</button>
+    {% endbuttons %}
+      <button name="delete" class="btn btn-primary">Delete Article</button>
+  </form>
+{% endblock content %}
+
+
+
+<!-- Modal -->
