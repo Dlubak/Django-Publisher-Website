@@ -1,5 +1,9 @@
 from django.db import models
 
+
+def get_default_category():
+    return Category.objects.get_or_create(name='default')[0]
+
 # Create your models here.
 
 
@@ -19,7 +23,7 @@ class Article(models.Model):
     content = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, null=True)
+        Category, on_delete=models.SET(get_default_category))
 
     class Meta:
         ordering = ['pub_date']
