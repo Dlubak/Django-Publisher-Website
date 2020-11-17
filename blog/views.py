@@ -7,7 +7,7 @@ from .forms import ArticleForm
 
 
 def index(request):
-    articles = Article.objects.all()
+    articles = Article.objects.all().order_by()
     paginator = Paginator(articles, 2)
 
     page_number = request.GET.get('page')
@@ -59,5 +59,15 @@ def delete_article(request, article_id):
     return redirect('blog:index')
 
 
-def search_article(request, keyword):
-    articles = Article.objects.filter()
+def search_article(request):
+    keyword = request.GET.get('query')
+    articles = Article.objects.filter(
+        title__icontains=keyword).order_by('pub_date')
+
+    paginator = Paginator(articles, 2)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    template_name = 'blog/index.html'
+    context = {'page_obj': page_obj}
+    return render(request, template_name, context)

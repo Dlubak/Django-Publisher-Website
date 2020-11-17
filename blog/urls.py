@@ -31,5 +31,6 @@ urlpatterns = [
          views.edit_article, name='edit_article'),
     # Delete article
     path('delete_article/<int:article_id>',
-         views.delete_article, name='delete_article')
+         views.delete_article, name='delete_article'),
+    path('search_article', views.search_article, name="search_article"),
 ]
