@@ -1,6 +1,13 @@
 {% extends 'blog/base.html' %}
+
 {% load bootstrap4 %}
+
 {% load static %}
+
+{% block scripts %}
+  <script type="module" src="{% static 'modal.js' %}"></script>
+{% endblock scripts %}
+
 {% block content %}
   <h1> Edit Article 
     <a href="{% url 'blog:article' article.id %}"> {{article.title}} </a>
@@ -38,5 +45,5 @@
     </div>
   </div>
   <!-- End of Modal -->
-  <script type="module" src="{% static 'modal.js' %}"></script>
+  
 {% endblock content %}

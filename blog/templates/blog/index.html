@@ -1,9 +1,32 @@
 {% extends 'blog/base.html' %}
+{% block pageheader %}
+  <div class="jumbotron">
+    <h1 class="display-3">Daily Blog Website.</h1>
+
+    <p class="lead"> 
+      Make your own Daily blog, and keep a list of the topics
+      you're learning/reading/thinking about. Whenever u want to write
+      something new about a topic, make an entry summarizing what you have gathered.
+    </p>
+    <a class="btn btn-lg btn-primary" href="#" role="button">Register &raquo;</a>
+    <a class="btn btn-lg btn-primary" href="{% url 'blog:new_article' %}" role="button">Create Article &raquo;</a>
+  </div>
+{% endblock pageheader %}
+
 {% block content %}
-    <a href="{% url 'blog:new_article' %}">Create Article</a>
   {% for article in articles %}
-    <a href="{% url 'blog:article' article.id %}">{{ article.title }}</a>
-    {{ article.pub_date }}
-    {{ article.content }}
+    <div class="card mb-3">
+      <h4 class="card-header">
+        {{ article.title }}
+        <small class="float-sm-right">
+          <div class="w-100 text-right close">
+            {{ article.pub_date|date:'M d, Y H:i' }}
+          </div>
+        </small>
+      </h4>
+      <div class="card-body">
+        {{ article.content|linebreaks }}
+      </div>
+    </div>
   {% endfor %}
 {% endblock content %}

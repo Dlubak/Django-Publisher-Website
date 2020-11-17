@@ -5,12 +5,40 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Daily Blog</title>
+    <title>Python blog</title>
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
+    {% block scripts %}{% endblock scripts %}
 </head>
 <body>
-{% block content %} {% endblock content %}
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary mb-4 border">
+    <a class="navbar-brand" href="{% url 'blog:index'%}">Homepage</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+        data-target="#navbarCollapse" aria-controls="navbarCollapse" 
+        aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarCollapse"> 
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'blog:new_article'%}">New Article</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </ul>
+    </div>
+  </nav>
+  <main role="main" class="container">
+    <div class="pb-2 mb-2 border-bottom">
+      {% block pageheader %}{% endblock pageheader %}
+    </div>
+    <div>
+      {% block content %}{% endblock content %}
+    </div>
+  </main>
 </body>
 </html>
