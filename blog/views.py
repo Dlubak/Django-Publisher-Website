@@ -1,14 +1,19 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
+from django.core.paginator import Paginator
 from .models import Article, Category
 from .forms import ArticleForm
 
 
 def index(request):
     articles = Article.objects.all()
+    paginator = Paginator(articles, 2)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     template_name = 'blog/index.html'
-    context = {'articles': articles}
+    context = {'page_obj': page_obj}
     return render(request, template_name, context)
 
 
@@ -52,3 +57,7 @@ def delete_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     article.delete()
     return redirect('blog:index')
+
+
+def search_article(request, keyword):
+    articles = Article.objects.filter()
