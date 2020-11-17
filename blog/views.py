@@ -51,4 +51,4 @@ def edit_article(request, article_id):
 def delete_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     article.delete()
-    return render(request, 'blog/index.html')
+    return redirect('blog:index')

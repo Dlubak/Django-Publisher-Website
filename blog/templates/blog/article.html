@@ -1,4 +1,6 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-  {{ article }}
+  {{ article.title }}
+  {{ article.content }}
+  <a href="{% url 'blog:edit_article' article.id %}">Manage Article</a>
 {% endblock content %}
