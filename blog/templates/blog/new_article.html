@@ -1,13 +1,23 @@
 
 {% extends 'blog/base.html' %}
+
 {% load bootstrap4 %}
+
+{% block pageheader %}
+ <h2> Create new Article </h2>
+{% endblock pageheader %}
+
 {% block content %}
-  <h1> Create new Article </h1>
+<div class="col-md-8 offset-md-2">
+  <br>
   <form action="{% url 'blog:new_article'%}" method="post" class="form">
     {% csrf_token %}
-    {%bootstrap_form form%}
+    {%bootstrap_form form %}
     {% buttons %}
-      <button name="submit" class="btn btn-primary">Add article</button>
+      <br><button name="submit" class="btn btn-primary">Add article</button>
+      <button name="cancel" class="btn btn-primary" onclick="javascript:history.back();">Cancel</button>
     {% endbuttons %}
+      
   </form>
+</div>
 {% endblock content %}
