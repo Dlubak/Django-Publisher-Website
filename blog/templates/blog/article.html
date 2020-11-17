@@ -4,9 +4,9 @@
   <h1>{{ article.title }} </h1>
   <small> {{ article.pub_date }} |&nbsp; Author: Anonymous Auhtor </small>
   <p>{{ article.content | linebreaks }}</p>
-  <small> <a href="{% url 'blog:edit_article' article.id%}">Manage Article</a>
+  <small> <a href="{% url 'blog:edit_article' article.id %}">Manage Article</a>
   <h3> Leave a comment: </h3>
-  <form method="post" action=".">
+  <form method="post" action="{% url 'blog:article' article.id %}">
     {% csrf_token %}
     <div class="form-group">
       {{ form.author }}
@@ -16,5 +16,16 @@
     </div>
     <button type="submit" class="btn btn-primary">Add comment</button>
   </form>
+  <hr>
+  <h3>Comments:</h3>
+    {% for comment in comments %}
+    <p>
+        On {{comment.pub_date }}&nbsp;
+        <b>{{ comment.author }}</b> wrote:
+    </p>
+    <p>{{ comment.body }}</p>
+    <hr>
+    {% endfor %}
 </div>
+
 {% endblock content %}
