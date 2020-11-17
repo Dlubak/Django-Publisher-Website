@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 from django.core.paginator import Paginator
-from .models import Article, Category
-from .forms import ArticleForm
+from .models import Article, Category, Comment
+from .forms import ArticleForm, CommentForm
 
 
 def index(request):
@@ -20,7 +20,26 @@ def index(request):
 def article(request, article_id):
     template_name = 'blog/article.html'
     article = get_object_or_404(Article, id=article_id)
-    context = {'article': article}
+    form = CommentForm()
+    if request.method != 'POST':
+        form = CommentForm()
+    else:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = Comment(
+                author=form.cleaned_data["author"],
+                body=form.cleaned_data["body"],
+                post=article
+            )
+            comment.save()
+            print(comment)
+    post_comments = Comment.objects.filter(post=article)
+    context = {
+        'article': article,
+        'comments': post_comments,
+        'form': form
+    }
+    print(context)
     return render(request, template_name, context)
 
 
@@ -57,6 +76,9 @@ def delete_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     article.delete()
     return redirect('blog:index')
+
+# TODO: Improve filter by adding more fields to filter from
+# Make it more robust
 
 
 def search_article(request):

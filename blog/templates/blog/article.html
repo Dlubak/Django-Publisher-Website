@@ -1,6 +1,20 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-  {{ article.title }}
-  {{ article.content }}
-  <a href="{% url 'blog:edit_article' article.id %}">Manage Article</a>
+<div class="col-md-8 offset-md-2">
+  <h1>{{ article.title }} </h1>
+  <small> {{ article.pub_date }} |&nbsp; Author: Anonymous Auhtor </small>
+  <p>{{ article.content | linebreaks }}</p>
+  <small> <a href="{% url 'blog:edit_article' article.id%}">Manage Article</a>
+  <h3> Leave a comment: </h3>
+  <form method="post" action=".">
+    {% csrf_token %}
+    <div class="form-group">
+      {{ form.author }}
+    </div>
+    <div class="form-group">
+      {{ form.body }}
+    </div>
+    <button type="submit" class="btn btn-primary">Add comment</button>
+  </form>
+</div>
 {% endblock content %}

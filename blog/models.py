@@ -26,7 +26,6 @@ class Article(models.Model):
         Category, on_delete=models.SET(get_default_category))
 
     class Meta:
-        ordering = ['pub_date']
         verbose_name = "Article"
         verbose_name_plural = "Articles"
 
@@ -36,7 +35,7 @@ class Article(models.Model):
 
 class Comment(models.Model):
     author = models.CharField(max_length=25)
-    body = models.TextField
+    body = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Article, on_delete=models.CASCADE)
 
