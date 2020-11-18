@@ -11,6 +11,7 @@
         {% bootstrap_form form %}
         {% buttons %}
         <button name="submit" class="btn btn-primary">Log in</button>
+        <a href="{% url 'blog:index' %}" class="btn btn-primary" role="button">Back To HomePage</a>
         {% endbuttons %}
         <input type="hidden" name="next" value="{% url 'blog:index' %}" />
     </form>

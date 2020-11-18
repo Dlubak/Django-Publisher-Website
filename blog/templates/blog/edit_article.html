@@ -19,6 +19,7 @@
     {% bootstrap_form form %}
     {% buttons %}
       <br><button name="submit" class="btn btn-primary">Save changes</button>
+      <a href="{% url 'blog:article' article.id %}" class="btn btn-primary" role="button">Back to the article</a>
       <button type="button" class ="btn btn-primary" id='showModal'> Delete</button>
     {% endbuttons %}
   </form>

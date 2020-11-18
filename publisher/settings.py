@@ -93,7 +93,7 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     # {
     #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    # },
+    # },wwwwwwwwwwwwwwwwww
     # {
     #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     # },
@@ -124,3 +124,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_URL = 'authentication:login'
+LOGIN_REDIRECT_URL = '/article/4'
+LOGOUT_REDIRECT_URL = "/"

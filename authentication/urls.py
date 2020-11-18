@@ -1,6 +1,7 @@
 """Defines URL patterns for users"""
-
+from django.conf import settings
 from django.urls import path, include
+from django.contrib.auth import views as auth_view
 
 from . import views
 
