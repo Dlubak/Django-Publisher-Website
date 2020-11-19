@@ -1,13 +1,14 @@
-from django.shortcuts import render, get_object_or_404, redirect
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 from django.core.paginator import Paginator
-from .models import Article, Category, Comment
+from django.shortcuts import get_object_or_404, redirect, render
+
 from .forms import ArticleForm, CommentForm
+from .models import Article, Comment
 
 
 def index(request):
-    articles = Article.objects.all().order_by()
+    articles = Article.objects.all().order_by('pub_date')
     paginator = Paginator(articles, 2)
 
     page_number = request.GET.get('page')
@@ -43,6 +44,7 @@ def article(request, article_id):
     return render(request, template_name, context)
 
 
+@login_required(login_url='/login')
 def new_article(request):
     template_name = 'blog/new_article.html'
     if request.method != 'POST':
@@ -57,6 +59,7 @@ def new_article(request):
     return render(request, 'blog/new_article.html', context)
 
 
+@login_required(login_url='/login')
 def edit_article(request, article_id):
     template_name = 'blog/edit.article.html'
     article = get_object_or_404(Article, id=article_id)
@@ -72,6 +75,7 @@ def edit_article(request, article_id):
     return render(request, 'blog/edit_article.html', context)
 
 
+@login_required(login_url='/login')
 def delete_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     article.delete()

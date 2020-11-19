@@ -1,8 +1,11 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm, PasswordResetForm
+from django.shortcuts import redirect, render
+
 # Create your views here.
 from .forms import CreateUserForm
+from blog.models import Article
 
 
 def registerPage(request):
@@ -12,8 +15,7 @@ def registerPage(request):
         form = CreateUserForm(data=request.POST)
         if form.is_valid():
             new_user = form.save()
-            login(request, new_user)
-            return redirect('blog:index')
+            return redirect('authenticate:login')
     context = {"form": form}
     return render(request, 'authentication/register.html', context)
 
@@ -29,11 +31,30 @@ def loginPage(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('blog:index')
+                return redirect('authentication:profile')
     context = {'form': form}
     return render(request, 'authentication/login.html', context)
 
 
+@login_required(login_url="/login")
 def logoutPage(request):
     logout(request)
     return redirect('blog:index')
+
+# TODO:
+# @login_required
+# def changePassword(request):
+#     return render(request, 'authentication/change_password_form.html', {})
+
+
+@login_required(login_url='/login')
+def profilePage(request):
+    """
+    Display a user's profile
+    """
+    print(request)
+    context = {
+        'profile': request.user,
+        'articles': Article.objects.all()  # (author=request.user).order_by('pub_date')
+    }
+    return render(request, 'authentication/profile.html', context)
