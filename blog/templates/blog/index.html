@@ -8,7 +8,7 @@
       you're learning/reading/thinking about. Whenever u want to write
       something new about a topic, make an entry summarizing what you have gathered.
     </p>
-    <a class="btn btn-lg btn-primary" href="#" role="button">Register &raquo;</a>
+    <a class="btn btn-lg btn-primary" href="{% url 'authentication:register' %}" role="button">Register &raquo;</a>
     <a class="btn btn-lg btn-primary" href="{% url 'blog:new_article' %}" role="button">Create Article &raquo;</a>
   </div>
 {% endblock pageheader %}

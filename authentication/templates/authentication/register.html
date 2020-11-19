@@ -11,10 +11,10 @@
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}
-        <button name="submit" class="btn btn-primary">Register</button>
-        <a href="{% url 'authentication:login' %}" class="btn btn-primary" role="button">Cancel</a>
+          <button name="submit" class="btn btn-primary">Register</button>
+          <a href="{% url 'authentication:login' %}" class="btn btn-primary" role="button">Cancel</a>
         {% endbuttons %}
         <input type="hidden" name="next" value="{% url 'blog:index' %}"/>
     </form>
-  </div>
+  </div> 
 {% endblock content %}
