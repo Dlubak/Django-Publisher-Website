@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm, PasswordResetForm
 from django.shortcuts import redirect, render
+from django.conf import settings
 
 # Create your views here.
 from .forms import CreateUserForm
@@ -31,7 +32,9 @@ def loginPage(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('authentication:profile')
+                print(settings.LOGIN_REDIRECT_URL)
+                print(request.POST.get('next'))
+                return redirect(request.POST.get('next'))
     context = {'form': form}
     return render(request, 'authentication/login.html', context)
 
