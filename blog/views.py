@@ -47,12 +47,14 @@ def article(request, article_id):
 @login_required(login_url='/login')
 def new_article(request):
     template_name = 'blog/new_article.html'
+
     if request.method != 'POST':
         articleForm = ArticleForm()
     else:
         articleForm = ArticleForm(request.POST)
         if articleForm.is_valid():
             new_article = articleForm.save(commit=False)
+            new_article.author = request.user
             new_article.save()
             return redirect('blog:article', new_article.id)
     context = {'form': articleForm}
