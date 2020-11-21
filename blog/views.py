@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+from authentication.decorators import check_owner_or_admin
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -10,7 +11,7 @@ from .models import Article, Comment
 def index(request):
     articles = Article.objects.all().order_by('pub_date')
     paginator = Paginator(articles, 2)
-
+    
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     template_name = 'blog/index.html'
@@ -60,12 +61,11 @@ def new_article(request):
     context = {'form': articleForm}
     return render(request, 'blog/new_article.html', context)
 
-
+@check_owner_or_admin
 @login_required(login_url='/login')
 def edit_article(request, article_id):
     template_name = 'blog/edit.article.html'
     article = get_object_or_404(Article, id=article_id)
-    print(article)
     if request.method != 'POST':
         form = ArticleForm(instance=article)
     else:
@@ -93,7 +93,7 @@ def search_article(request):
         title__icontains=keyword).order_by('pub_date')
 
     paginator = Paginator(articles, 2)
-
+    print(request.get_full_path)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     template_name = 'blog/index.html'
