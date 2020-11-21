@@ -53,7 +53,6 @@ def logoutPage(request):
 #     return render(request, 'authentication/change_password_form.html', {})
 
 
-@login_required(login_url='/login')
 def profilePage(request):
     """
     Display a user's profile
