@@ -1,20 +1,21 @@
 {% extends 'blog/base.html' %}
 {% load bootstrap4 %}
 
-{% block pageheader %}
- <h2>Register new account</h2>
-{% endblock pageheader %}
-
 {% block content %}
-  <div class="col-md-8 offset-md-2">
-    <form action="{% url 'authentication:register' %}" method="post" class="form">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
-          <button name="submit" class="btn btn-primary">Register</button>
-          <a href="{% url 'authentication:login' %}" class="btn btn-primary" role="button">Cancel</a>
-        {% endbuttons %}
-        <input type="hidden" name="next" value="{% url 'blog:index' %}"/>
-    </form>
-  </div> 
+<div class="container">
+  <div class="text-center" style="padding:15px">
+    <h2>Register new account</h2>
+  </div>
+    <div class="col-md-8 offset-md-2" style="padding: 25px">
+      <form action="{% url 'authentication:register' %}" method="post" class="form">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          {% buttons %}
+            <button name="submit" class="btn btn-primary">Register</button>
+            <a href="{% url 'authentication:login' %}" class="btn btn-primary" role="button">Cancel</a>
+          {% endbuttons %}
+          <input type="hidden" name="next" value="{% url 'blog:index' %}"/>
+      </form>
+  </div>
+</div>
 {% endblock content %}

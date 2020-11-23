@@ -1,10 +1,8 @@
 {% extends 'blog/base.html' %}
 {% load bootstrap4 %}
-{% block pageheader %}
-  <h2> Log in to your account. </h2>
-{% endblock pageheader %}
 
 {% block content %}
+<div class="container">
   <div class="col-md-4 offset-md-4">
     <form action="{% url 'authentication:login' %} "method="post" class="form">
         {% csrf_token %}
@@ -16,4 +14,5 @@
         <input type="hidden" name="next" value="{{ request.GET.next }}"/>
     </form>
   </div>
+</div>
 {%endblock content%}
