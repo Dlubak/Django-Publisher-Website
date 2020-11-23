@@ -64,7 +64,6 @@ def profilePage(request, username):
     }
     if request.user == user or request.user.is_superuser:
         articles = Article.objects.filter(
-            author=request.user).order_by('pub_date')
+            author=user).order_by('pub_date')
         context['articles'] = articles
-    print(context)
     return render(request, 'authentication/profile.html', context)

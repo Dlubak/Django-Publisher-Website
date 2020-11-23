@@ -1,52 +1,20 @@
 {% extends 'blog/base.html' %}
-
 {% load bootstrap4 %}
 
-{% load static %}
 
-{% block scripts %}
-  <script type="module" src="{% static 'modal.js' %}"></script>
-{% endblock scripts %}
-
-{% block pageheader %}
-  <h3> Edit Article: <a href="{% url 'blog:article' article.id %}"> {{article.title}} </a> </h3>
-{% endblock pageheader %}
 
 {% block content %}
-<div class="col-md-8 offset-md-2"> 
-  <form action="{% url 'blog:edit_article' article.id %}" method="post" class="form">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    {% buttons %}
-      <br><button name="submit" class="btn btn-primary">Save changes</button>
-      <a href="{% url 'blog:article' article.id %}" class="btn btn-primary" role="button">Back to the article</a>
-      <button type="button" class ="btn btn-primary" id='showModal'> Delete</button>
-    {% endbuttons %}
-  </form>
-</div>
-  
-  <!-- Modal -->
-  <div class="modal" tabindex="-1" role="dialog" id="confirmModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Delete</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <p>Are you sure u want to delete {{article.title}}?</p>
-          </div>
-          <div class="modal-footer">
-            <a href="{% url 'blog:delete_article' article.id %}">
-              <button type="button" class="btn btn-primary">Delete</button>
-            </a>
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-      </div>
-    </div>
+<div class="container">
+  <h3 class="text-center ml-auto">Article: <a href="{% url 'blog:article' article.id %}"> {{article.title}} </a> </h3>
+  <div class="col-md-8 offset-md-2"> 
+    <form action="{% url 'blog:edit_article' article.id %}" method="post" class="form">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+        <br><button name="submit" class="btn btn-primary">Save changes</button>
+        <a href="{% url 'authentication:profile' request.user %}" class="btn btn-primary" role="button">Back to the profile</a>
+      {% endbuttons %}
+    </form>
   </div>
-  <!-- End of Modal -->
-  
+</div>  
 {% endblock content %}

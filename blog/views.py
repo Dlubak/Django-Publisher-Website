@@ -81,8 +81,9 @@ def edit_article(request, article_id):
 @login_required(login_url='/login')
 def delete_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
+    author = article.author
     article.delete()
-    return redirect('blog:index')
+    return redirect('authentication:profile', username=author.username)
 
 # TODO: Improve filter by adding more fields to filter from
 # Make it more robust
@@ -94,7 +95,7 @@ def search_article(request):
         title__icontains=keyword).order_by('pub_date')
 
     paginator = Paginator(articles, 2)
-    print(request.get_full_path)
+
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     template_name = 'blog/index.html'
