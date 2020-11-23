@@ -21,7 +21,9 @@ class Article(models.Model):
         verbose_name_plural = "Articles"
 
     def __str__(self):
-        return self.title
+        if len(self.content) >= 30:
+            return f"{self.content[:30]}..."
+        return self.content
 
 
 class Comment(models.Model):

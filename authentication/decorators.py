@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from blog.models import Article
 from django.core.exceptions import PermissionDenied
 
+
 def unauthenticated_user(view_func):
     @wraps(view_func)
     def wrap(request, *args, **kwargs):
@@ -11,6 +12,7 @@ def unauthenticated_user(view_func):
         else:
             return view_func(request, *args, **kwargs)
     return wrap
+
 
 def check_owner_or_admin(view_func):
     @wraps(view_func)

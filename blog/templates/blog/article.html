@@ -1,38 +1,57 @@
 {% extends 'blog/base.html' %}
 
-{% block pageheader %}
- <h1>{{article.title}}</h1>
- <small> {{ article.pub_date }} |&nbsp; Author: Anonymous Auhtor </small>
-{% endblock pageheader %}
+{%block content%}
+<!-- Page Content -->
+<div class="container">
+  <div class="row">
+    <!-- Post Content Column -->
+    <div class="col-lg-8">
+      <!-- Title -->
+      <h1 class="mt-4">{{ article.title }}</h1>
+      <!-- Author -->
+      <p class="lead">
+        by
+        <a href="{% url 'authentication:profile' article.author %}">{{ article.author }}</a>
+      </p>
+      <hr>
+      <!-- Date/Time -->
+      <p>Posted on {{ article.pub_date }}</p>
+      <hr>
+      <!-- Preview Image -->
+      <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+      <hr>
+      <!-- Post Content -->
+      <p class="lead">{{article.content | linebreaks }}</p>
+      <hr>
 
-{% block content %}
-<div class="col-md-8 offset-md-2">
-  <p>{{ article.content | linebreaks }}</p>
-  <small> <a href="{% url 'blog:edit_article' article.id %}">Manage Article</a>  </small>
-  <hr>
-</div>
-<div class="col-md-4 offset-md-4">
-  <h3> Leave a comment: </h3>
-  <form method="post" action="{% url 'blog:article' article.id %}">
-    {% csrf_token %}
-    <div class="form-group">
-      {{ form.author }}
+      <!-- Comments Form -->
+      <div class="card my-4">
+        <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card-body">
+          <form method="post" action="{% url 'blog:article' article.id %}">
+            {% csrf_token %}
+            <div class="form-group">
+              {{form.author}}
+            </div>
+            <div class="form-group">
+              {{form.body}}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+      {% for comment in comments%}
+      <!-- Single Comment -->
+      <div class="media mb-4">
+        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+        <div class="media-body">
+          <h5 class="mt-0">{{ comment.author }} -- {{ comment.pub_date }}</h5>
+            {{ comment.body }}
+        </div>
+      </div>
+      <hr>
+      {% endfor %}
     </div>
-    <div class="form-group">
-      {{ form.body }}
-    </div>
-    <button type="submit" class="btn btn-primary">Add comment</button>
-  </form>
-  <hr>
-  <h3>Comments:</h3>
-    {% for comment in comments %}
-    <p>
-        On {{comment.pub_date }}&nbsp;
-        <b>{{ comment.author }}</b> wrote:
-    </p>
-    <p>{{ comment.body }}</p>
-    <hr>
-    {% endfor %}
+  </div>
 </div>
-
-{% endblock content %}
+  {%endblock content%}

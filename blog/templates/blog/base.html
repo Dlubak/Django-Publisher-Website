@@ -46,22 +46,14 @@
       <ul class="navbar-nav ml-auto">
       <li class="nav-item">
           {% if user.is_authenticated %}
-            <a class="nav-link" href="{% url 'authentication:profile'%}">{{user.username}}</a>
+            <a class="nav-link" href="{% url 'authentication:profile' user.username %}">{{user.username}}</a>
           {% endif %}
         </li>
       </ul>
     </div>
   </nav>
   <main role="main" class="container">
-    <div class="pb-2 mb-2 border-bottom">
-      {% block pageheader %}{% endblock pageheader %}
-    </div>
-    <div>
-      {% block content %}{% endblock content %}
-    </div>
-    <nav class="navbar fixed-bottom navbar-light bg-light">
-      <a class="navbar-brand" href="#">Chat</a>
-    </nav>
+    {% block content %}{% endblock content %}
   </main>
 </body>
 </html>

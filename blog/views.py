@@ -10,8 +10,8 @@ from .models import Article, Comment
 
 def index(request):
     articles = Article.objects.all().order_by('pub_date')
-    paginator = Paginator(articles, 2)
-    
+    paginator = Paginator(articles, 4)
+
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     template_name = 'blog/index.html'
@@ -60,6 +60,7 @@ def new_article(request):
             return redirect('blog:article', new_article.id)
     context = {'form': articleForm}
     return render(request, 'blog/new_article.html', context)
+
 
 @check_owner_or_admin
 @login_required(login_url='/login')

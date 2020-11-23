@@ -1,52 +1,53 @@
 {% extends 'blog/base.html' %}
-{% block pageheader %}
-  <div class="jumbotron">
-    <h1 class="display-3">elo</h1>
-
-    <p class="lead"> 
-     elo
-    </p>
-    <a class="btn btn-lg btn-primary" href="{% url 'authentication:register' %}" role="button">Register &raquo;</a>
-    <a class="btn btn-lg btn-primary" href="{% url 'blog:new_article' %}" role="button">Create Article &raquo;</a>
-  </div>
-{% endblock pageheader %}
-
 {% block content %}
-  {% for article in page_obj %}
-    <div class="card mb-3">
-      <h4 class="card-header">
-        <a href="{% url 'blog:article' article.id %}">{{ article.title }}</a>
-        <small class="float-sm-right">
-          <div class="w-100 text-right close">
-            {{ article.pub_date|date:'M d, Y H:i' }}
-          </div>
-        </small>
-      </h4>
-      <div class="card-body">
-        {{ article.content|linebreaks }}
+<!-- Page Content -->
+<div class="container">
+  <!-- Jumbotron Header -->
+  <header class="jumbotron my-4">
+    <h1 class="display-3">A Warm Welcome!</h1>
+    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
+    <a href="#" class="btn btn-primary btn-lg">Call to action!</a>
+  </header>
+  <div class="row text-center">
+    <!-- Page Articles -->
+    {% for article in page_obj %}
+    <div class="col-lg-3 col-md-6 mb-4">
+      <div class="card h-100">
+        <img class="card-img-top" src="https://placeimg.com/380/230/animals" alt="">
+        <div class="card-body">
+          <h4 class="card-title"> {{article.title}} </h4>
+          <hr>
+          <p class="card-text"> {{article}} </p>
+        </div>
+        <div class="card-footer">
+          <a href="{% url 'blog:article' article.id %}" class="btn btn-primary">Read More</a>
+        </div>
       </div>
     </div>
-  {% endfor %}
-
-  <nav aria-label="paginaton">
-    <ul class="pagination justify-content-center">
-      {% if page_obj.has_previous %}
+    {% endfor %}
+  </div>
+</div>
+<nav aria-label="paginaton">
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"><Previous</a>
+    </li>
+    {% endif %} 
+    {% if page_obj.count > 1 %}
+      {% for i in page_obj.paginator.page_range %}
       <li class="page-item">
-        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"><< Previous</a>
+        <a class="page-link" href="?page={{i}}">{{ i }}</a>
       </li>
-      {% endif %}
-      {% if page_obj.count > 1 %}
-        {% for i in page_obj.paginator.page_range %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{i}}">{{ i }}</a>
-        </li>
-        {% endfor %}
-      {% endif %}
-      {% if page_obj.has_next %}
-      <li class="page-item">
-        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next >></a>
-      </li>
-      {% endif %}
-    </ul>
-  </nav>
+      {% endfor %}
+    {% endif %}
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
 {% endblock content %}
+
+
