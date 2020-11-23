@@ -1,6 +1,6 @@
-from django.contrib.auth.decorators import login_required
 # Create your views here.
 from authentication.decorators import check_owner_or_admin
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -34,14 +34,12 @@ def article(request, article_id):
                 post=article
             )
             comment.save()
-            print(comment)
     post_comments = Comment.objects.filter(post=article)
     context = {
         'article': article,
         'comments': post_comments,
         'form': form
     }
-    print(context)
     return render(request, template_name, context)
 
 
@@ -85,10 +83,9 @@ def delete_article(request, article_id):
     article.delete()
     return redirect('authentication:profile', username=author.username)
 
+
 # TODO: Improve filter by adding more fields to filter from
 # Make it more robust
-
-
 def search_article(request):
     keyword = request.GET.get('query')
     articles = Article.objects.filter(
