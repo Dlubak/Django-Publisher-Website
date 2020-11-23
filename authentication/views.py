@@ -3,7 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
                                        PasswordResetForm, UserCreationForm)
-from django.shortcuts import redirect, render
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, render, get_object_or_404
 
 from .decorators import unauthenticated_user
 from .forms import CreateUserForm
@@ -40,7 +41,7 @@ def loginPage(request):
                 return redirect('blog:index')
     context = {'form': form}
     return render(request, 'authentication/login.html', context)
- 
+
 
 @login_required(login_url="/login")
 def logoutPage(request):
@@ -53,13 +54,17 @@ def logoutPage(request):
 #     return render(request, 'authentication/change_password_form.html', {})
 
 
-def profilePage(request):
+def profilePage(request, username):
     """
     Display a user's profile
     """
-    print(request)
+    user = get_object_or_404(User, username=username)
     context = {
-        'profile': request.user,
-        'articles': Article.objects.filter(author=request.user).order_by('pub_date')
+        'user': user
     }
+    if request.user == user or request.user.is_superuser:
+        articles = Article.objects.filter(
+            author=request.user).order_by('pub_date')
+        context['articles'] = articles
+    print(context)
     return render(request, 'authentication/profile.html', context)
