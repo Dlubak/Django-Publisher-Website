@@ -1,25 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from PIL import Image
 # Create your models here.
-class UserProfile(models.Model):
+
+
+class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    image = models.ImageField(default='default.png',
+                              upload_to='authentication')
     bio = models.CharField(max_length=100, default='')
 
-# def create_user_profile(sender, instance, created, **kwargs):
-#     """
-#     :param sender: Class User.
-#     :param instance: The user instance.
-#     """
-#     if created:
-#         # Seems the following also works:
-#         #   UserProfile.objects.create(user=instance)
-#         # TODO: Which is correct or better?
-#         profile = UserProfile(user=instance)
-#         profile.save()
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.image.path)
 
-# post_save.connect(create_user_profile,
-#                   sender=User,
-#                   dispatch_uid="users-profilecreation-signal")
-# #post_save.conntext(create_profile, sender=User)
+        if img.height > 150 or img.width > 150:
+            output_size = (150, 150)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
+
+    def __str__(self):
+        return self.user.username
