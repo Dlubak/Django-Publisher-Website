@@ -9,10 +9,13 @@
 {% block content %}
 <div class="container">
   <div class="border media mb-4" style='padding: 25px'>
-    <img class="d-flex mr-3 rounded-circle" src="{{ user.profile.image.url }}" alt="">
+    <img class="align-self-center mr-3 rounded-circle" src="{{ user.profile.image.url }}" alt="">
     <div class="media-body">
-      <h5 class="mt-0">{{ user.username }}</h5>
+      <h5 class="mt-0 mb-1">{{ user.username }}</h5>
       {{user.profile.bio}}
+    </div>
+    <div>
+      <a class="ml-4" href="{% url 'authentication:update_profile' user.username %}">Manage Profile</a>
     </div>
   </div>
 </div>

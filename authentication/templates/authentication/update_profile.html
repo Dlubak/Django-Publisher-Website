@@ -7,12 +7,13 @@
     <h2>Update Profile</h2>
   </div>
     <div class="col-md-8 offset-md-2" style="padding: 25px">
-      <form method="post" class="form" enctype="multipart/form-data">>
+      <form method="post" class="form" enctype="multipart/form-data">
           {% csrf_token %}
           {% bootstrap_form u_form %}
           {% bootstrap_form p_form %}
           {% buttons %}
             <button name="submit" class="btn btn-primary">Update</button>
+            <a href="{% url 'authentication:profile' user.username%}" class="btn btn-primary" role="button">Back to the profile</a>
           {% endbuttons %}
       </form>
   </div>

@@ -27,7 +27,7 @@ class Article(models.Model):
 
 
 class Comment(models.Model):
-    author = models.CharField(max_length=25)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Article, on_delete=models.CASCADE)
