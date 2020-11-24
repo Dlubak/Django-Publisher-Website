@@ -3,9 +3,9 @@
 
 {% block content %}
 <div class="container">
-  <h3 class="text-center ml-auto">Article: <a href="{% url 'blog:article' article.id %}"> {{article.title}} </a> </h3>
+  <h3 class="text-center ml-auto">Article: <a href="{% url 'blog:article' article.id %}"> {{article.title}} </a></h3>
   <div class="col-md-8 offset-md-2"> 
-    <form action="{% url 'blog:edit_article' article.id %}" method="post" class="form">
+    <form action="{% url 'blog:edit_article' article.id %}" method="post" class="form" enctype="multipart/form-data">
       {% csrf_token %}
       {% bootstrap_form form %}
       {% buttons %}

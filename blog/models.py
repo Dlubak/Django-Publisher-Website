@@ -1,20 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
+from PIL import Image
 
-
-# def get_default_category():
-#     return Category.objects.get_or_create(name='default')[0]
 
 # Create your models here.
-
-
 class Article(models.Model):
     title = models.CharField(max_length=50, unique=True)
     content = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    # category = models.ForeignKey(
-    #     Category, on_delete=models.SET(get_default_category))
+    image = models.ImageField(default='default_article.png',
+                              upload_to='blog')
 
     class Meta:
         verbose_name = "Article"
@@ -24,6 +20,16 @@ class Article(models.Model):
         if len(self.content) >= 30:
             return f"{self.content[:30]}..."
         return self.content
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.image.path)
+
+        # 900x300
+        if img.height > 300 or img.width > 900:
+            output_size = (300, 900)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
 
 
 class Comment(models.Model):

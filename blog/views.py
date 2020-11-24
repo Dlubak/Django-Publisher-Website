@@ -50,7 +50,7 @@ def new_article(request):
     if request.method != 'POST':
         articleForm = ArticleForm()
     else:
-        articleForm = ArticleForm(request.POST)
+        articleForm = ArticleForm(data=request.POST, files=request.FILES)
         if articleForm.is_valid():
             new_article = articleForm.save(commit=False)
             new_article.author = request.user
@@ -68,7 +68,8 @@ def edit_article(request, article_id):
     if request.method != 'POST':
         form = ArticleForm(instance=article)
     else:
-        form = ArticleForm(instance=article, data=request.POST)
+        form = ArticleForm(
+            instance=article, data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
             return redirect('blog:article', article_id=article.id)
