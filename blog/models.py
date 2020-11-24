@@ -11,6 +11,7 @@ class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default_article.png',
                               upload_to='blog')
+    views = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = "Article"

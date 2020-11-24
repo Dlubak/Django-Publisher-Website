@@ -18,10 +18,15 @@ def index(request):
     context = {'page_obj': page_obj}
     return render(request, template_name, context)
 
-
 def article(request, article_id):
     template_name = 'blog/article.html'
     article = get_object_or_404(Article, id=article_id)
+    session_key = f"article_{article_id}"
+    if (not request.session.get(session_key) 
+        and request.user != article.author):
+        article.views +=1
+        article.save()
+        request.session[session_key] = True
     form = CommentForm()
     if request.method != 'POST':
         form = CommentForm()
