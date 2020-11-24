@@ -21,6 +21,7 @@ class Article(models.Model):
             return f"{self.content[:30]}..."
         return self.content
 
+    # TODO: THIS NEEDS to be refactored
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         img = Image.open(self.image.path)
