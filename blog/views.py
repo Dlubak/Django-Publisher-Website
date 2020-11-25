@@ -1,9 +1,10 @@
 # Create your views here.
-from authentication.decorators import check_owner_or_admin
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
+from .decorators import check_owner_or_admin
 from .forms import ArticleForm, CommentForm
 from .models import Article, Comment
 
@@ -89,6 +90,7 @@ def edit_article(request, article_id):
     return render(request, 'blog/edit_article.html', context)
 
 
+@check_owner_or_admin
 @login_required(login_url='/login')
 def delete_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
@@ -100,9 +102,12 @@ def delete_article(request, article_id):
 # TODO: Improve filter by adding more fields to filter from
 # Make it more robust
 def search_article(request):
-    keyword = request.GET.get('query')
-    articles = Article.objects.filter(
-        title__icontains=keyword).order_by('pub_date')
+    search_post = request.GET.get('query')
+    if search_post:
+        articles = Article.objects.filter(
+            Q(title__icontains=search_post) | Q(content__icontains=search_post))
+    else:
+        articles = Article.objects.all().order_by("-pub_date")
 
     paginator = Paginator(articles, 4)
 

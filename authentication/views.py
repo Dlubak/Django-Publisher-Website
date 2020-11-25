@@ -5,11 +5,12 @@ from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
                                        PasswordResetForm, UserCreationForm)
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, get_object_or_404
-from .decorators import unauthenticated_user, check_owner_or_admin
+from .decorators import unauthenticated_user, check_profile_owner
 from .forms import CreateUserForm, UpdateProfileForm, UpdateUserForm
 
 
 # Create your views here.
+@unauthenticated_user
 def registerPage(request):
     if request.method != "POST":
         form = CreateUserForm()
@@ -47,11 +48,6 @@ def logoutPage(request):
     logout(request)
     return redirect('blog:index')
 
-# TODO:
-# @login_required
-# def changePassword(request):
-#     return render(request, 'authentication/change_password_form.html', {})
-
 
 def profilePage(request, username):
     """
@@ -59,7 +55,7 @@ def profilePage(request, username):
     """
     user = get_object_or_404(User, username=username)
     context = {
-        'profilePage': user
+        'registered_user': user
     }
     if request.user == user or request.user.is_superuser:
         articles = Article.objects.filter(
@@ -68,7 +64,8 @@ def profilePage(request, username):
     return render(request, 'authentication/profile.html', context)
 
 
-@login_required(login_url='/login')
+# @login_required(login_url='/login')
+@check_profile_owner
 def updateProfile(request, username):
     template_name = "authentication/update_profile.html"
     user = get_object_or_404(User, username=username)

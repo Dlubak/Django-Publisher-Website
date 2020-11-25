@@ -1,5 +1,5 @@
 {% load bootstrap4 %}
-
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +7,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Python blog</title>
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+    <link rel="stylesheet" href="{% static 'css/fixed-button.css' %}">
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
     {% block scripts %}{% endblock scripts %}
@@ -28,6 +29,9 @@
           <a class="nav-link" href="{% url 'authentication:logout'%}">Log out</a>
         </li>
         {% else %}
+        <li class="naw-item">
+          <a class="nav-link" href="{% url 'authentication:register'%}">Register</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'authentication:login'%}">Log in</a>
         </li>
@@ -46,7 +50,7 @@
       <ul class="navbar-nav ml-auto">
       <li class="nav-item">
           {% if user.is_authenticated %}
-            <a class="nav-link" href="{% url 'authentication:profile' user.username %}">{{user.username}}</a>
+            <a class="nav-link" href="{% url 'authentication:profile' user.username %}">{{ user.username }}</a>
           {% endif %}
         </li>
       </ul>
@@ -55,5 +59,6 @@
   <main role="main" class="container">
     {% block content %}{% endblock content %}
   </main>
+  <a href="#" role="button" id="fixedbutton" class="btn btn-primary">Chat</button>
 </body>
 </html>
