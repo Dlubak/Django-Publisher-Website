@@ -99,8 +99,6 @@ def delete_article(request, article_id):
     return redirect('authentication:profile', username=author.username)
 
 
-# TODO: Improve filter by adding more fields to filter from
-# Make it more robust
 def search_article(request):
     search_post = request.GET.get('query')
     if search_post:
