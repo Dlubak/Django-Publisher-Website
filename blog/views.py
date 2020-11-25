@@ -9,14 +9,19 @@ from .models import Article, Comment
 
 
 def index(request):
+    template_name = 'blog/index.html'
+    context = {}
     all_articles = Article.objects.all().order_by('-pub_date')
-    featured_article = all_articles[0]
-    articles = all_articles[1:]
+    try:
+        context['featured_article'] = all_articles[0]
+        articles = all_articles[1:]
+    except IndexError:
+        articles = all_articles
     paginator = Paginator(articles, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    template_name = 'blog/index.html'
-    context = {'page_obj': page_obj, 'featured_article': featured_article}
+
+    context['page_obj'] = page_obj
     return render(request, template_name, context)
 
 
@@ -99,7 +104,7 @@ def search_article(request):
     articles = Article.objects.filter(
         title__icontains=keyword).order_by('pub_date')
 
-    paginator = Paginator(articles, 6)
+    paginator = Paginator(articles, 4)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
