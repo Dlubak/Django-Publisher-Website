@@ -1,18 +1,30 @@
-
-Daily Blog
+Publisher Website
 =====
 
-Daily Blog is a Django app to conduct Web-based blog webisted. 
+Publisher Webiste is a Django Project blog type.
 
-Detailed documentation will be in the "docs" directory.
 
 Quick start
 -----------
 
+1. Create virtual environment
+   on MacOS and Linux
+   ``python3 -m venv env``
+   on Windows
+   ``py -m venv env``
+   
+2. Activate virtual enviroment
+   on MacOS and Linux
+   ``source env/bin/activate``
+   on Windows
+   ``env\Scripts\activate``
+   
+3. Run pip install -r requirements.txt
 
-1. Run ``python manage.py migrate`` to create the polls models.
+4. Run ``python manage.py migrate`` to create the project models.
 
-2. Start the development server and visit http://127.0.0.1:8000/admin/
-   to create a poll (you'll need the Admin app enabled).
 
-3. Visit http://127.0.0.1:8000/ to participate in the poll.
+5. Start the development server and visit http://127.0.0.1:8000/register to create account 
+   and start publishing your articles/thoughts
+   
+-----------------
