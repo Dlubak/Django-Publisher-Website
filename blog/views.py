@@ -9,22 +9,24 @@ from .models import Article, Comment
 
 
 def index(request):
-    articles = Article.objects.all().order_by('pub_date')
+    all_articles = Article.objects.all().order_by('-pub_date')
+    featured_article = all_articles[0]
+    articles = all_articles[1:]
     paginator = Paginator(articles, 4)
-
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     template_name = 'blog/index.html'
-    context = {'page_obj': page_obj}
+    context = {'page_obj': page_obj, 'featured_article': featured_article}
     return render(request, template_name, context)
+
 
 def article(request, article_id):
     template_name = 'blog/article.html'
     article = get_object_or_404(Article, id=article_id)
     session_key = f"article_{article_id}"
-    if (not request.session.get(session_key) 
-        and request.user != article.author):
-        article.views +=1
+    if (not request.session.get(session_key)
+            and request.user != article.author):
+        article.views += 1
         article.save()
         request.session[session_key] = True
     form = CommentForm()
@@ -97,7 +99,7 @@ def search_article(request):
     articles = Article.objects.filter(
         title__icontains=keyword).order_by('pub_date')
 
-    paginator = Paginator(articles, 2)
+    paginator = Paginator(articles, 6)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

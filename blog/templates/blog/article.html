@@ -16,10 +16,8 @@
       <hr>
       <!-- Date/Time -->
       <p>Posted on {{ article.pub_date }}</p>
-      <!-- Preview Image -->
-      <img class="img-fluid rounded" src="{{article.image.url}}" alt="">
       <!-- Post Content -->
-      <p class="lead">{{article.content | linebreaks }}</p>
+      <p class="lead">{{ article.content | linebreaks }}</p>
       <!-- Comments Form -->
       {% if user.is_authenticated %}
       <div class="card my-4">

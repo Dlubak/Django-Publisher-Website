@@ -9,8 +9,6 @@ class Article(models.Model):
     content = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='default_article.png',
-                              upload_to='blog')
     views = models.IntegerField(default=0)
 
     class Meta:
@@ -18,20 +16,9 @@ class Article(models.Model):
         verbose_name_plural = "Articles"
 
     def __str__(self):
-        if len(self.content) >= 30:
-            return f"{self.content[:30]}..."
+        if len(self.content) >= 25:
+            return f"{self.content[:25]}..."
         return self.content
-
-    # TODO: THIS NEEDS to be refactored
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        img = Image.open(self.image.path)
-
-        # 900x300
-        if img.height > 300 or img.width > 900:
-            output_size = (300, 900)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
 
 
 class Comment(models.Model):

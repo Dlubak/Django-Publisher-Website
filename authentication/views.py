@@ -59,7 +59,7 @@ def profilePage(request, username):
     """
     user = get_object_or_404(User, username=username)
     context = {
-        'user': user
+        'profilePage': user
     }
     if request.user == user or request.user.is_superuser:
         articles = Article.objects.filter(
