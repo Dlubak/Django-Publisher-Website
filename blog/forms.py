@@ -1,6 +1,6 @@
 from django import forms
-
-from blog.models import Article
+from django.forms import Textarea
+from blog.models import Article, Comment
 
 
 class ArticleForm(forms.ModelForm):
@@ -10,9 +10,13 @@ class ArticleForm(forms.ModelForm):
 
 
 class CommentForm(forms.Form):
-    body = forms.CharField(widget=forms.Textarea(
-        attrs={
-            "class": "form-control",
-            "placeholder": "Leave a comment!"
-        })
-    )
+    class Meta:
+        model = Comment
+        fields = ['body']
+        widgets = {
+            "body": Textarea(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Leave a comment!"
+                })
+        }
