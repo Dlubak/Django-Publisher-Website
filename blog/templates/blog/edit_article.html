@@ -7,6 +7,7 @@
   <div class="col-md-8 offset-md-2"> 
     <form action="{% url 'blog:edit_article' article.id %}" method="post" class="form" enctype="multipart/form-data">
       {% csrf_token %}
+      {{ form.media }}
       {% bootstrap_form form %}
       {% buttons %}
         <br><button name="submit" class="btn btn-primary">Save changes</button>

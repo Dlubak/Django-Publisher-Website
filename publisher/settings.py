@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'authentication.apps.AuthenticationConfig',
     # Third party applications
     'bootstrap4',
+    'ckeditor',
     # Default apps
     'django.contrib.admin',
     'django.contrib.auth',
